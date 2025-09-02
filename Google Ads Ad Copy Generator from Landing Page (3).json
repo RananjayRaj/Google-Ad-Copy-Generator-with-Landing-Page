@@ -1,0 +1,832 @@
+{
+  "name": "Google Ads Ad Copy Generator from Landing Page",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 4000,
+          "temperature": 0.3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2368,
+        224
+      ],
+      "id": "2e29d204-6a1c-41fc-9077-f4f524e9cf23",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "VghV2OUNdwcjGUvn",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert Google Ads copywriter. Create high-converting Responsive Search Ad copy.\n\nKEYWORD CONTEXT:\n- Target Keyword: \"{{ $json.keyword }}\"\n- Search Volume: {{ $json.searchVolume }}\n- Competition: \"{{ $json.competition }}\"\n- Intent: \"{{ $json.intent }}\"\n- Ad Group: \"{{ $json.adGroup }}\"\n\nBUSINESS CONTEXT:\n- Page Value: {{ $json.pageTitle }}\n- Target Audience: {{ $json.targetAudience }}\n- Main Topics: {{ JSON.stringify($json.mainTopics) }}\n\nAD COPY REQUIREMENTS:\n- 15 Headlines (max 30 characters each)\n- 4 Descriptions (max 90 characters each)\n- Include target keyword in at least 3 headlines and 2 descriptions\n- Create urgency/scarcity where appropriate\n- Include clear CTAs\n- Focus on benefits over features\n\nReturn ONLY valid JSON:\n{\n  \"keyword\": \"{{ $json.keyword }}\",\n  \"adGroup\": \"{{ $json.adGroup }}\",\n  \"headlines\": [\n    \"headline 1\",\n    \"headline 2\",\n    \"headline 3\",\n    \"headline 4\",\n    \"headline 5\",\n    \"headline 6\",\n    \"headline 7\",\n    \"headline 8\",\n    \"headline 9\",\n    \"headline 10\",\n    \"headline 11\",\n    \"headline 12\",\n    \"headline 13\",\n    \"headline 14\",\n    \"headline 15\"\n  ],\n  \"descriptions\": [\n    \"description 1\",\n    \"description 2\",\n    \"description 3\",\n    \"description 4\"\n  ],\n  \"keywordData\": {\n    \"searchVolume\": {{ $json.searchVolume }},\n    \"competition\": \"{{ $json.competition }}\",\n    \"intent\": \"{{ $json.intent }}\",\n    \"estimatedCpc\": {{ $json.estimatedCpc }}\n  }\n}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 1200
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2384,
+        464
+      ],
+      "id": "e1e4d722-5aa9-4186-8e9c-2c259db11ea5",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "VghV2OUNdwcjGUvn",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "10cdLSkWa6rXhWAFDcNVYOHhNnDC43CWRUQrUPPGnyRc",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/10cdLSkWa6rXhWAFDcNVYOHhNnDC43CWRUQrUPPGnyRc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "keyword"
+          ],
+          "schema": [
+            {
+              "id": "adGroup",
+              "displayName": "adGroup",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "campaign",
+              "displayName": "campaign",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "matchType",
+              "displayName": "matchType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "negativeKeywords",
+              "displayName": "negativeKeywords",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "searchVolume",
+              "displayName": "searchVolume",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "competition",
+              "displayName": "competition",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estimatedCpc",
+              "displayName": "estimatedCpc",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "intent",
+              "displayName": "intent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline1",
+              "displayName": "headline1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline2",
+              "displayName": "headline2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline3",
+              "displayName": "headline3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline4",
+              "displayName": "headline4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline5",
+              "displayName": "headline5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline6",
+              "displayName": "headline6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline7",
+              "displayName": "headline7",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline8",
+              "displayName": "headline8",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline9",
+              "displayName": "headline9",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline10",
+              "displayName": "headline10",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline11",
+              "displayName": "headline11",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline12",
+              "displayName": "headline12",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline13",
+              "displayName": "headline13",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline14",
+              "displayName": "headline14",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline15",
+              "displayName": "headline15",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description1",
+              "displayName": "description1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description2",
+              "displayName": "description2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description3",
+              "displayName": "description3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description4",
+              "displayName": "description4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "targetAudience",
+              "displayName": "targetAudience",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "landingPageTitle",
+              "displayName": "landingPageTitle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "createdAt",
+              "displayName": "createdAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error",
+              "displayName": "error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "debugInfo",
+              "displayName": "debugInfo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        2208,
+        688
+      ],
+      "id": "46cdc6a6-7de4-4fbc-95a1-732af1badbbb",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fgDv40fNryDv9sN0",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({\n  json: {\n    ...item.json,\n    originalData: {\n      keyword: item.json.keyword,\n      volume: item.json.volume,\n      seedKeyword: item.json.seedKeyword,\n      cpc: item.json.cpc\n    }\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        464
+      ],
+      "id": "1665d717-a9c3-43e4-9f1f-08ee70176bb6",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Real Content Extraction from HTTP Response\nconsole.log('Extracting real content from HTTP response...');\nconst inputData = $input.first().json;\n\nconsole.log('Input data keys:', Object.keys(inputData));\n\n// Get form data and HTTP response\nconst formData = $('On form submission').first().json;\nconst httpData = $('HTTP Request').first().json;\n\nconsole.log('Form data:', formData);\nconsole.log('HTTP response keys:', Object.keys(httpData));\n\n// Extract actual content from HTTP response\nlet pageTitle = 'Unknown Page';\nlet metaDescription = 'Page content';\nlet extractedContent = 'Content not available';\n\ntry {\n  // HTTP response should contain the HTML\n  const htmlContent = httpData.body || httpData.data || httpData.content || '';\n  \n  if (htmlContent && typeof htmlContent === 'string') {\n    // Extract title from HTML\n    const titleMatch = htmlContent.match(/<title[^>]*>(.*?)<\\/title>/i);\n    if (titleMatch) {\n      pageTitle = titleMatch[1].replace(/\\s+/g, ' ').trim();\n    }\n    \n    // Extract meta description\n    const metaMatch = htmlContent.match(/<meta[^>]*name=['\"]description['\"][^>]*content=['\"]([^'\"]*)['\"]/i);\n    if (metaMatch) {\n      metaDescription = metaMatch[1].replace(/\\s+/g, ' ').trim();\n    }\n    \n    // Extract text content (remove HTML tags)\n    let textContent = htmlContent\n      .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '') // Remove scripts\n      .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '')   // Remove styles\n      .replace(/<[^>]+>/g, ' ')                         // Remove HTML tags\n      .replace(/\\s+/g, ' ')                             // Normalize whitespace\n      .trim();\n    \n    // Get first 1000 characters of meaningful content\n    if (textContent.length > 100) {\n      extractedContent = textContent.substring(0, 1000);\n    }\n    \n    console.log('✅ Extracted title:', pageTitle);\n    console.log('✅ Extracted description:', metaDescription);\n    console.log('✅ Content preview:', extractedContent.substring(0, 200));\n  }\n} catch (error) {\n  console.error('Error extracting content:', error);\n}\n\nreturn [{\n  json: {\n    url: formData.URL,\n    title: pageTitle,\n    metaDescription: metaDescription,\n    content: extractedContent,\n    businessInfo: {\n      industry: formData['Business Area'] || 'Technology',\n      targetAudience: formData['Target Audience'] || 'Business professionals',\n      budget: 'moderate',\n      location: 'United States'\n    },\n    campaignGoals: {\n      objective: formData['Campaign Goal']?.toLowerCase().replace(' ', '_') || 'lead_generation',\n      keywordTypes: ['commercial', 'informational', 'transactional']\n    },\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        224
+      ],
+      "id": "c06e5d14-5a23-4303-9067-9b5709f962a2",
+      "name": "Landing Page Analyzer"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dynamic Prompt Builder - Creates the prompt with real data\nconst data = $input.first().json;\n\nconsole.log('Building prompt with data:', JSON.stringify(data, null, 2));\n\nconst prompt = `You are a Google Ads keyword research expert. Analyze the following landing page and generate comprehensive keyword research.\n\nLANDING PAGE ANALYSIS:\n- URL: ${data.url || 'Not provided'}\n- Title: ${data.title || 'Not provided'}\n- Meta Description: ${data.metaDescription || 'Not provided'}\n- Content Sample: ${data.content ? data.content.substring(0, 1500) : 'Not provided'}\n\nBUSINESS CONTEXT:\n- Company: ${data.businessInfo?.companyName || 'Not provided'}\n- Industry: ${data.businessInfo?.industry || 'Not provided'}\n- Target Audience: ${data.businessInfo?.targetAudience || 'Not provided'}\n- Budget Level: ${data.businessInfo?.budget || 'Not provided'}\n- Location: ${data.businessInfo?.location || 'Not provided'}\n\nCAMPAIGN GOALS:\n- Objective: ${data.campaignGoals?.objective || 'Not provided'}\n- Keyword Types: ${JSON.stringify(data.campaignGoals?.keywordTypes || [])}\n\nGenerate 25-30 high-quality keywords across these categories:\n1. **Seed Keywords** (5-8 main topics from the page)\n2. **Commercial Keywords** (buying intent: \"best X\", \"top X\", \"X software\")\n3. **Informational Keywords** (research intent: \"what is X\", \"how to X\")\n4. **Transactional Keywords** (action intent: \"buy X\", \"X pricing\", \"X demo\")\n5. **Long-tail Keywords** (specific, lower competition phrases)\n6. **Competitor Keywords** (brand + alternatives)\n\nFor each keyword, estimate:\n- Search Volume (monthly searches)\n- Competition Level (Low/Medium/High)\n- CPC Range ($X.XX - $Y.YY)\n- Intent Type (Commercial/Informational/Transactional/Navigational)\n\nReturn ONLY valid JSON with no markdown formatting:\n\n{\n  \"pageAnalysis\": {\n    \"mainTopics\": [\"topic1\", \"topic2\", \"topic3\"],\n    \"primaryValue\": \"main value proposition\",\n    \"targetAudience\": \"identified audience\",\n    \"contentType\": \"product/service/information\"\n  },\n  \"keywordResearch\": [\n    {\n      \"keyword\": \"example keyword\",\n      \"category\": \"seed|commercial|informational|transactional|long-tail|competitor\",\n      \"searchVolume\": 12000,\n      \"competition\": \"Low|Medium|High\",\n      \"cpcMin\": 2.50,\n      \"cpcMax\": 5.80,\n      \"intent\": \"Commercial|Informational|Transactional|Navigational\",\n      \"priority\": \"High|Medium|Low\",\n      \"adGroupSuggestion\": \"suggested ad group name\"\n    }\n  ],\n  \"seedKeywords\": [\n    {\n      \"keyword\": \"main seed keyword\",\n      \"searchVolume\": 15000,\n      \"relatedTerms\": [\"variation1\", \"variation2\", \"variation3\"]\n    }\n  ]\n}`;\n\nconsole.log('Generated prompt preview:', prompt.substring(0, 500) + '...');\n\nreturn [{\n  json: {\n    prompt: prompt,\n    originalData: data\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2032,
+        208
+      ],
+      "id": "a724486f-d844-426b-b8b4-60da442093a6",
+      "name": "Dynamic Prompt Builder"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Correct Processing for Your LangChain OpenAI Format\nconsole.log('Processing OpenAI keyword research response...');\n\nlet openAIContent = null;\nlet keywordData = [];\nlet pageAnalysis = {};\nconst items = [];\n\ntry {\n  const inputData = $input.first().json;\n  console.log('=== DEBUG INPUT STRUCTURE ===');\n  console.log('Input keys:', Object.keys(inputData));\n  console.log('Has message?', !!inputData.message);\n  console.log('Has content?', !!inputData.content);\n  \n  // Your LangChain OpenAI format: single object with message.content\n  if (inputData.message && inputData.message.content) {\n    console.log('✅ Found content in: inputData.message.content');\n    openAIContent = inputData.message.content;\n  }\n  // Alternative: direct content\n  else if (inputData.content) {\n    console.log('✅ Found content in: inputData.content');\n    openAIContent = inputData.content;\n  }\n  // Standard OpenAI format (fallback)\n  else if (inputData.choices && inputData.choices[0] && inputData.choices[0].message) {\n    console.log('✅ Found content in: inputData.choices[0].message.content');\n    openAIContent = inputData.choices[0].message.content;\n  }\n  // Array format (another fallback)\n  else if (Array.isArray(inputData) && inputData[0] && inputData[0].message) {\n    console.log('✅ Found content in: array format');\n    openAIContent = inputData[0].message.content;\n  }\n  else {\n    console.error('❌ No content found in any expected location');\n    console.error('Full input structure:', JSON.stringify(inputData, null, 2));\n    throw new Error(`No OpenAI content found. Available keys: ${Object.keys(inputData)}`);\n  }\n  \n  if (!openAIContent) {\n    throw new Error('OpenAI content is empty or null');\n  }\n  \n  console.log('✅ Content found! Length:', openAIContent.length);\n  console.log('Content preview:', openAIContent.substring(0, 200) + '...');\n  \n  // Parse the JSON content (should be clean already)\n  const parsedResponse = JSON.parse(openAIContent);\n  \n  keywordData = parsedResponse.keywordResearch || [];\n  pageAnalysis = parsedResponse.pageAnalysis || {};\n  \n  console.log('✅ JSON parsed successfully!');\n  console.log('Keywords found:', keywordData.length);\n  console.log('Page analysis topics:', pageAnalysis.mainTopics?.length || 0);\n  \n} catch (error) {\n  console.error('❌ Processing Error:', error.message);\n  console.error('Raw content preview:', openAIContent ? openAIContent.substring(0, 500) : 'null');\n  \n  return [{\n    json: {\n      error: 'Failed to parse keyword research',\n      details: error.message,\n      rawContent: openAIContent ? openAIContent.substring(0, 500) : 'No content found'\n    }\n  }];\n}\n\n// Validate we have keywords\nif (!keywordData || keywordData.length === 0) {\n  console.log('❌ No keywords found in response');\n  return [{\n    json: {\n      error: 'No keywords generated',\n      details: 'OpenAI response contained no keyword research data',\n      pageAnalysis: pageAnalysis\n    }\n  }];\n}\n\n// Process keywords into ad groups\nconst adGroups = {};\n\nkeywordData.forEach((keyword, index) => {\n  const adGroupName = keyword.adGroupSuggestion || `Ad Group ${Math.ceil((index + 1) / 5)}`;\n  \n  if (!adGroups[adGroupName]) {\n    adGroups[adGroupName] = [];\n  }\n  \n  adGroups[adGroupName].push(keyword);\n});\n\nconsole.log(`✅ Created ${Object.keys(adGroups).length} ad groups:`, Object.keys(adGroups).slice(0, 5));\n\n// Create items for each keyword\nObject.entries(adGroups).forEach(([adGroupName, keywords]) => {\n  keywords.forEach(keyword => {\n    items.push({\n      json: {\n        keyword: keyword.keyword,\n        category: keyword.category,\n        searchVolume: keyword.searchVolume,\n        competition: keyword.competition,\n        cpcMin: keyword.cpcMin,\n        cpcMax: keyword.cpcMax,\n        estimatedCpc: ((keyword.cpcMin + keyword.cpcMax) / 2).toFixed(2),\n        intent: keyword.intent,\n        priority: keyword.priority,\n        adGroup: adGroupName,\n        adGroupKeywords: keywords.map(k => k.keyword),\n        pageTitle: pageAnalysis?.primaryValue || 'AI Solutions and Services',\n        targetAudience: pageAnalysis?.targetAudience || 'Developers',\n        mainTopics: pageAnalysis?.mainTopics || [],\n        source: 'ai_research',\n        timestamp: new Date().toISOString()\n      }\n    });\n  });\n});\n\nconsole.log(`✅ SUCCESS: Created ${items.length} keyword items across ${Object.keys(adGroups).length} ad groups`);\n\n// Log sample output for verification\nif (items.length > 0) {\n  console.log('Sample keyword:', items[0].json.keyword);\n  console.log('Sample ad group:', items[0].json.adGroup);\n  console.log('Sample search volume:', items[0].json.searchVolume);\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        464
+      ],
+      "id": "6a336654-76cb-4d87-98d2-c067f75f5f1a",
+      "name": "Process Keyword Research"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fixed Final Processing - Handle LangChain OpenAI Format\nconsole.log('Final processing - organizing ad copy...');\n\nconst items = [];\nconst allInputs = $input.all();\n\nconsole.log('Processing', allInputs.length, 'ad copy items');\n\nfor (let i = 0; i < allInputs.length; i++) {\n  const adCopyItem = allInputs[i];\n  \n  try {\n    console.log(`Processing item ${i + 1}...`);\n    console.log('Item keys:', Object.keys(adCopyItem.json));\n    \n    // Extract OpenAI ad copy response - Handle LangChain format correctly\n    let adCopyContent;\n    \n    // LangChain format: message.content (like your OpenAI1)\n    if (adCopyItem.json.message && adCopyItem.json.message.content) {\n      console.log('✅ Found ad copy in: message.content field');\n      adCopyContent = adCopyItem.json.message.content;\n    }\n    // Direct content field\n    else if (adCopyItem.json.content) {\n      console.log('✅ Found ad copy in: content field');\n      adCopyContent = adCopyItem.json.content;\n    }\n    // Alternative formats\n    else if (adCopyItem.json.response) {\n      console.log('✅ Found ad copy in: response field');\n      adCopyContent = adCopyItem.json.response;\n    }\n    else if (adCopyItem.json.text) {\n      console.log('✅ Found ad copy in: text field');\n      adCopyContent = adCopyItem.json.text;\n    }\n    else if (adCopyItem.json.choices && adCopyItem.json.choices[0]) {\n      console.log('✅ Found ad copy in: choices format');\n      adCopyContent = adCopyItem.json.choices[0].message.content;\n    }\n    else {\n      console.error('❌ Available keys in item:', Object.keys(adCopyItem.json));\n      throw new Error('No ad copy content found in any expected location');\n    }\n    \n    if (!adCopyContent) {\n      throw new Error('Ad copy content is empty');\n    }\n    \n    console.log('✅ Ad copy content found, length:', adCopyContent.length);\n    console.log('Content preview:', adCopyContent.substring(0, 200) + '...');\n    \n    // Clean and parse the ad copy JSON\n    let cleanedContent = adCopyContent.trim();\n    cleanedContent = cleanedContent.replace(/```json/g, '');\n    cleanedContent = cleanedContent.replace(/```/g, '');\n    cleanedContent = cleanedContent.trim();\n    \n    const adCopy = JSON.parse(cleanedContent);\n    console.log('✅ Ad copy parsed successfully for keyword:', adCopy.keyword);\n    \n    // Get original keyword data from the current item if available\n    const originalData = adCopyItem.json.originalData || {};\n    \n    // Create final item\n    items.push({\n      json: {\n        // Ad Group Organization\n        adGroup: adCopy.adGroup || originalData.adGroup || 'Default Ad Group',\n        campaign: `Campaign - Main`,\n        \n        // Keyword Information\n        keyword: adCopy.keyword || originalData.keyword || 'Unknown',\n        matchType: 'Broad',\n        negativeKeywords: [],\n        \n        // Search Data\n        searchVolume: adCopy.keywordData?.searchVolume || originalData.searchVolume || 'Unknown',\n        competition: adCopy.keywordData?.competition || originalData.competition || 'Unknown',\n        estimatedCpc: adCopy.keywordData?.estimatedCpc || originalData.estimatedCpc || 'Unknown',\n        intent: adCopy.keywordData?.intent || originalData.intent || 'Unknown',\n        priority: originalData.priority || 'Medium',\n        \n        // Ad Copy (15 headlines, 4 descriptions)\n        headline1: adCopy.headlines?.[0] || 'Missing',\n        headline2: adCopy.headlines?.[1] || 'Missing',\n        headline3: adCopy.headlines?.[2] || 'Missing',\n        headline4: adCopy.headlines?.[3] || 'Missing',\n        headline5: adCopy.headlines?.[4] || 'Missing',\n        headline6: adCopy.headlines?.[5] || 'Missing',\n        headline7: adCopy.headlines?.[6] || 'Missing',\n        headline8: adCopy.headlines?.[7] || 'Missing',\n        headline9: adCopy.headlines?.[8] || 'Missing',\n        headline10: adCopy.headlines?.[9] || 'Missing',\n        headline11: adCopy.headlines?.[10] || 'Missing',\n        headline12: adCopy.headlines?.[11] || 'Missing',\n        headline13: adCopy.headlines?.[12] || 'Missing',\n        headline14: adCopy.headlines?.[13] || 'Missing',\n        headline15: adCopy.headlines?.[14] || 'Missing',\n        \n        description1: adCopy.descriptions?.[0] || 'Missing',\n        description2: adCopy.descriptions?.[1] || 'Missing',\n        description3: adCopy.descriptions?.[2] || 'Missing',\n        description4: adCopy.descriptions?.[3] || 'Missing',\n        \n        // Additional Data\n        targetAudience: originalData.targetAudience || 'Unknown',\n        landingPageTitle: originalData.pageTitle || 'Unknown',\n        category: originalData.category || 'Unknown',\n        \n        // Timestamps\n        createdAt: new Date().toISOString(),\n        source: 'ai_generated'\n      }\n    });\n    \n    console.log(`✅ Successfully processed keyword: ${adCopy.keyword}`);\n    \n  } catch (error) {\n    console.error(`❌ Error processing item ${i + 1}:`, error.message);\n    console.error('Full item structure:', JSON.stringify(adCopyItem.json, null, 2));\n    \n    items.push({\n      json: {\n        keyword: 'Error',\n        adGroup: 'Error Group',\n        error: error.message,\n        searchVolume: 'Error',\n        competition: 'Error',\n        estimatedCpc: 'Error',\n        debugInfo: {\n          itemKeys: Object.keys(adCopyItem.json),\n          hasMessage: !!adCopyItem.json.message,\n          hasContent: !!adCopyItem.json.content,\n          messageKeys: adCopyItem.json.message ? Object.keys(adCopyItem.json.message) : 'no message'\n        }\n      }\n    });\n  }\n}\n\nconsole.log(`✅ Final result: processed ${items.length} ad copy items`);\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        688
+      ],
+      "id": "47efb701-b7f8-4eb7-8a5f-3b7cf27fa7f4",
+      "name": "Final processing"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Improved Code3 - Pass All Required Data\nreturn $input.all().map(item => ({\n  json: {\n    // Keep original fields for OpenAI prompt\n    keyword: item.json.keyword,\n    searchVolume: item.json.searchVolume,\n    competition: item.json.competition,\n    estimatedCpc: item.json.estimatedCpc,\n    intent: item.json.intent,\n    adGroup: item.json.adGroup,\n    pageTitle: item.json.pageTitle,\n    targetAudience: item.json.targetAudience,\n    mainTopics: item.json.mainTopics,\n    category: item.json.category,\n    priority: item.json.priority,\n    \n    // Also preserve as originalData for Code2 to access\n    originalData: {\n      keyword: item.json.keyword,\n      searchVolume: item.json.searchVolume,\n      competition: item.json.competition,\n      estimatedCpc: item.json.estimatedCpc,\n      intent: item.json.intent,\n      adGroup: item.json.adGroup,\n      pageTitle: item.json.pageTitle,\n      targetAudience: item.json.targetAudience,\n      mainTopics: item.json.mainTopics,\n      category: item.json.category,\n      priority: item.json.priority\n    }\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        464
+      ],
+      "id": "d2010d08-4193-4e8c-bff2-10f86bbc5596",
+      "name": "Passing All Data"
+    },
+    {
+      "parameters": {
+        "formTitle": "Landing Page URL",
+        "formDescription": "Enter the landing page URL here. ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "URL",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Business Area",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Campaign Goal",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Lead Gen"
+                  },
+                  {
+                    "option": "Awareness"
+                  },
+                  {
+                    "option": "Conversions"
+                  },
+                  {
+                    "option": "Sales"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Target Audience",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        1520,
+        -16
+      ],
+      "id": "c253ef71-7eb7-4ba4-bb76-8d3f77ecee8a",
+      "name": "On form submission",
+      "webhookId": "5b40a5b3-d721-4b5b-8251-f6d11e5ecd45"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Headers",
+              "value": "User-Agent: Mozilla/5.0 (compatible bot)"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1728,
+        -16
+      ],
+      "id": "6de2c499-49be-4639-842c-cbffb9cac7be",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fixed Data Consolidation Node\nconsole.log('Consolidating form data with AI analysis');\n\nconst formData = $('On form submission').first().json;\nconst agentData = $input.first().json;\n\nconsole.log('Form data:', formData);\nconsole.log('Agent data keys:', Object.keys(agentData));\n\n// Extract AI agent output\nlet agentOutput = '';\nif (agentData.output) {\n  agentOutput = agentData.output;\n} else if (agentData.text) {\n  agentOutput = agentData.text;\n} else if (agentData.response) {\n  agentOutput = agentData.response;\n} else if (typeof agentData === 'string') {\n  agentOutput = agentData;\n}\n\nconsole.log('Agent output:', agentOutput);\n\nreturn [{\n  json: {\n    // Form inputs\n    landingPageUrl: formData.URL,\n    formBusinessArea: formData['Business Area'],\n    formCampaignGoal: formData['Campaign Goal'], \n    formTargetAudience: formData['Target Audience'],\n    \n    // AI Analysis\n    agentAnalysis: agentOutput,\n    \n    // Processed for downstream\n    businessInfo: {\n      industry: formData['Business Area'] || 'Technology',\n      targetAudience: formData['Target Audience'] || 'Business professionals',\n      budget: 'moderate',\n      location: 'United States'\n    },\n    \n    campaignGoals: {\n      objective: formData['Campaign Goal']?.toLowerCase().replace(' ', '_') || 'lead_generation',\n      keywordTypes: ['commercial', 'informational', 'transactional']\n    },\n    \n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        -16
+      ],
+      "id": "865a3cbe-d716-4415-876e-4be4ed2e5ab7",
+      "name": "Data Consolidation Node"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simple Business Context Extractor\nconst formData = $('On form submission').first().json;\n\n// Map form campaign goals to workflow format\nconst goalMapping = {\n  'Lead Gen': 'lead_generation',\n  'Awareness': 'awareness',\n  'Conversions': 'conversions',\n  'Sales': 'sales'\n};\n\nreturn [{\n  json: {\n    landingPageUrl: formData.URL,\n    businessInfo: {\n      industry: formData['Business Area'],\n      targetAudience: formData['Target Audience'],\n      budget: 'moderate',\n      location: 'United States'\n    },\n    campaignGoals: {\n      objective: goalMapping[formData['Campaign Goal']] || 'lead_generation',\n      keywordTypes: ['commercial', 'informational', 'transactional']\n    },\n    originalUserInput: `URL: ${formData.URL}, Business: ${formData['Business Area']}, Goal: ${formData['Campaign Goal']}`,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2240,
+        -16
+      ],
+      "id": "9d2fddce-6303-48e4-bd86-3da68906c4d1",
+      "name": "Simple Business Context Extractor"
+    },
+    {
+      "parameters": {
+        "operation": "scrape",
+        "url": "={{ $('On form submission').item.json.URL }}",
+        "scrapeOptions": {
+          "options": {
+            "includeTags": {
+              "items": [
+                {
+                  "tag": "Title"
+                },
+                {
+                  "tag": "Meta Description"
+                },
+                {
+                  "tag": "content"
+                }
+              ]
+            },
+            "headers": {}
+          }
+        },
+        "requestOptions": {}
+      },
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        -32
+      ],
+      "id": "d355fd18-3890-472f-aa36-79bd64e93743",
+      "name": "Scrape a url and get its content",
+      "credentials": {
+        "firecrawlApi": {
+          "id": "ceNEm1TzS3Rmdbmg",
+          "name": "Firecrawl account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Process Keyword Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Final processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Passing All Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        []
+      ]
+    },
+    "Landing Page Analyzer": {
+      "main": [
+        [
+          {
+            "node": "Dynamic Prompt Builder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dynamic Prompt Builder": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Keyword Research": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final processing": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Passing All Data": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Scrape a url and get its content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Consolidation Node": {
+      "main": [
+        [
+          {
+            "node": "Landing Page Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Business Context Extractor": {
+      "main": [
+        [
+          {
+            "node": "Data Consolidation Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape a url and get its content": {
+      "main": [
+        [
+          {
+            "node": "Simple Business Context Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a9dafbe7-0c0e-4d78-94e7-7052d2b27cb7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d6692eacc4d58eee7122a84a09d437eabbda07bfaca213a26dd5b094f7f9fb87"
+  },
+  "id": "u1phKu5azvJPxrxX",
+  "tags": []
+}
