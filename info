@@ -1,0 +1,112 @@
+Technical Architecture: AI-Powered Google Ads Generator
+Platform: n8n (open-source workflow automation)
+AI Model: GPT-4.1-Mini via LangChain OpenAI nodes
+Output: Google Sheets with campaign-ready data
+Workflow Structure (11 Nodes):
+1. Chat Trigger Node
+
+Receives landing page URL input
+Parses additional context (company, industry, audience, budget)
+Uses regex to extract and validate URLs
+Smart industry detection based on URL patterns
+
+2. Simple Message Parser
+
+Extracts structured data from user input
+Sets intelligent defaults for missing business context
+Maps campaign objectives to appropriate keyword strategies
+
+3. Landing Page Analyzer
+
+Mock content analysis based on URL patterns
+In production: would integrate HTTP Request node for actual scraping
+Generates business context and content themes
+Creates foundation for keyword strategy
+
+4. Dynamic Prompt Builder
+
+Constructs contextual prompts using extracted landing page data
+Requests 25-35 keywords across 6 categories:
+
+Seed keywords (core topics)
+Commercial keywords (buying intent)
+Informational keywords (research intent)
+Transactional keywords (action intent)
+Long-tail keywords (specific, low competition)
+Competitor keywords (brand alternatives)
+
+
+
+5. OpenAI Keyword Research
+
+Processes landing page context through GPT-4.1-Mini
+Returns structured JSON with keyword data, search volumes, competition levels, and CPC estimates
+Includes page analysis with main topics and target audience identification
+
+6. Process Keyword Research
+
+Parses OpenAI JSON response
+Generates multiple match types per keyword (Broad, Phrase, Exact)
+Applies match type logic:
+
+Broad: All keywords
+Phrase: Commercial + Transactional keywords
+Exact: High-intent keywords (Transactional, High priority, <5K volume)
+
+
+Creates formatted keywords with proper Google Ads syntax
+
+7. Code1 (Data Preparation)
+
+Maps processed keywords to OpenAI2 input format
+Preserves original data structure for final processing
+Ensures data consistency across workflow stages
+
+8. Passing All Data
+
+Intermediate data transformation
+Maintains data integrity between processing stages
+
+9. OpenAI2 (Ad Copy Generation)
+
+Generates 15 headlines and 4 descriptions per keyword
+Creates sitelink extensions (4 sitelinks with text + descriptions)
+Produces callout extensions (6 callouts, max 25 characters)
+Builds structured snippets with service/type categorization
+Returns structured JSON with complete ad assets
+
+10. Final Processing
+
+Parses OpenAI2 ad copy responses
+Handles JSON cleaning and error management
+Maps all data to Google Sheets schema
+Generates UTM-tracked final URLs
+Creates display URLs for ads
+
+11. Google Sheets Export
+
+Writes to pre-configured spreadsheet
+Maps 47 columns including:
+
+Keyword data (keyword, match type, volume, CPC, competition)
+Ad copy (15 headlines, 4 descriptions)
+Extensions (sitelinks, callouts, structured snippets)
+Campaign organization (ad groups, priority, intent)
+Tracking (final URLs, display URLs, timestamps)
+
+
+
+Key Technical Features:
+Error Handling: Comprehensive try-catch blocks with detailed logging
+Data Validation: JSON parsing with fallback values
+Match Type Logic: Algorithmic assignment based on keyword characteristics
+URL Generation: Automatic UTM parameter addition for tracking
+Scalability: Processes 30+ keywords with 3 match types each (90+ rows)
+API Integrations:
+
+OpenAI API (via LangChain nodes)
+Google Sheets API
+n8n Chat Trigger system
+
+Processing Time: Sub-2 minute execution for complete campaign generation
+Data Output: Campaign-ready Google Ads import file with full keyword research, ad copy, and extension assets.
