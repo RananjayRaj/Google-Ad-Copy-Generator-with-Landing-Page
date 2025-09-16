@@ -4,7 +4,7 @@ This repository contains a sanitized n8n workflow export: **Google Ads Ad Copy G
 
 ## Files
 
-- `workflows/google-ads-adcopy-from-landingpage.sanitized.json` — sanitized n8n workflow (importable).
+- `Google Ads Ad Copy Generator from Landing Page (3).json` — sanitized n8n workflow (importable).
 - `.env.example` — example environment variables for local reference.
 - `README.md` — this file.
 
@@ -18,7 +18,7 @@ This repository contains a sanitized n8n workflow export: **Google Ads Ad Copy G
 
 2. **Import the workflow**
    - Open your n8n instance.
-   - Import `workflows/google-ads-adcopy-from-landingpage.sanitized.json` (Import → From File).
+   - Import `Google Ads Ad Copy Generator from Landing Page (3).json` (Import → From File).
 
 3. **Create credentials in n8n**
    Create the credentials and attach them to the matching nodes via the n8n UI (recommended):
